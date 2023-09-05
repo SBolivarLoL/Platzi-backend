@@ -1,19 +1,18 @@
 const express = require('express');
-const { faker } = require('@faker-js/faker');
+
+const ProductsService = require('../services/product');
+const validatorHandler = require('../middlewares/validatorHandler');
+const {
+  createProductSchema,
+  updateProductSchema,
+  getProductSchema,
+} = require('../shemas/product');
 
 const router = express.Router();
+const service = new ProductsService();
 
-router.get('/', (req, res) => {
-  const products = [];
-  const { size } = req.query;
-  const limit = size || 10;
-  for (let i = 0; i < limit; i++) {
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.url(),
-    });
-  }
+router.get('/', async (req, res) => {
+  const products = await service.find();
   res.json(products);
 });
 
@@ -21,14 +20,19 @@ router.get('/filter', (req, res) => {
   res.send('Yo soy filter');
 });
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id,
-    name: `product ${id}`,
-    number: 11,
-  });
-});
+router.get(
+  '/:id',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const product = await service.findOne(id);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 // How to solve the issue of having an endpoint that collides with a similar one (/products/:id)
 /*
@@ -40,12 +44,36 @@ Solution is coding all specific endpoints before dynamic endpoints
 Meaning that /products/filter should be coded before /products/:id
 */
 
-router.post('/', (req,res) => {
-  const body = req.body;
-  res.json({
-    message: 'created',
-    data: body
-  })
-})
+router.post(
+  '/',
+  validatorHandler(createProductSchema, 'body'),
+  async (req, res) => {
+    const body = req.body;
+    const newPrduct = await service.create(body);
+    res.status(201).json(newPrduct);
+  },
+);
+
+router.patch(
+  '/:id',
+  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(updateProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const { id } = req.params;
+      const product = await service.update(id, body);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const product = await service.delete(id);
+  res.json(product);
+});
 
 module.exports = router;
