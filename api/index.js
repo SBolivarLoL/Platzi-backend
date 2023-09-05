@@ -26,7 +26,7 @@ app.use(cors(options));
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hola a mi server en express');
 });
 
