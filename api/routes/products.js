@@ -6,7 +6,7 @@ const {
   createProductSchema,
   updateProductSchema,
   getProductSchema,
-} = require('../shemas/product');
+} = require('../schemas/product');
 
 const router = express.Router();
 const service = new ProductsService();
