@@ -14,6 +14,7 @@ const sequelize = new Sequelize(URI, {
 
 setupModels(sequelize);
 
-sequelize.sync();
+// Removing sync() since it is not a good function to use for production
+//sequelize.sync();
 
 module.exports = sequelize;
