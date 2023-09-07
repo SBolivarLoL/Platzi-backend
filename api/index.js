@@ -7,6 +7,7 @@ const {
   errorHandler,
   logErrors,
   boomErrorHandler,
+  validationErrorHandler,
 } = require('./middlewares/errorHandler');
 
 const app = express();
@@ -35,6 +36,7 @@ routerApi(app);
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
+app.use(validationErrorHandler);
 
 app.listen(port, () => {
   console.log('Mi puerto' + port);
