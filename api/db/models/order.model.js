@@ -1,18 +1,17 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-const CATEGORIES_TABLE = 'categories';
+export const ORDER_TABLE = 'orders';
 
-const CategorySchema = {
+export const OrderSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name: {
+  details: {
     allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
+    type: DataTypes.TEXT,
   },
   createdAt: {
     allowNull: false,
@@ -22,19 +21,17 @@ const CategorySchema = {
   },
 };
 
-class Category extends Model {
+export class Order extends Model {
   static associate() {
     //associate
-  }
+  };
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: CATEGORIES_TABLE,
-      modelName: 'Category',
+      tableName: ORDER_TABLE,
+      modelName: 'Order',
       timestamps: false,
     };
-  }
-}
-
-module.exports = { CATEGORIES_TABLE, CategorySchema, Category };
+  };
+};

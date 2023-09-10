@@ -1,4 +1,4 @@
-const boom = require('@hapi/boom');
+import boom from '@hapi/boom';
 
 function validatorHandler(schema, property) {
   // creating a middleware dynamically using js closures
@@ -12,4 +12,4 @@ function validatorHandler(schema, property) {
   };
 }
 
-module.exports = validatorHandler;
+export default validatorHandler;

@@ -1,21 +1,21 @@
-const boom = require('@hapi/boom');
-const { models } = require('./../libs/sequelize');
+import boom from '@hapi/boom';
+import sequelize from './../libs/sequelize.js';
 
 class UserService {
   constructor() {}
 
   async create(data) {
-    const newUser = await models.User.create(data);
+    const newUser = await sequelize.models.User.create(data);
     return newUser;
   }
 
   async find() {
-    const response = await models.User.findAll();
+    const response = await sequelize.models.User.findAll();
     return response;
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await sequelize.models.User.findByPk(id);
     if (!user) {
       throw boom.notFound('User not found');
     }
@@ -35,4 +35,4 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+export default UserService;

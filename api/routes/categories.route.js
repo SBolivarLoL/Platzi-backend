@@ -1,10 +1,14 @@
-const express = require('express');
+import { Router } from 'express';
 
-const CategoryService = require('../services/category');
-const validatorHandler = require('../middlewares/validatorHandler');
-const { createCategorySchema, updateCategorySchema, getCategorySchema } = require('../schemas/category');
+import CategoryService from '../services/category.js';
+import validatorHandler from '../middlewares/validatorHandler.js';
+import {
+  createCategorySchema,
+  updateCategorySchema,
+  getCategorySchema,
+} from '../schemas/category.schema.js';
 
-const router = express.Router();
+const router = Router();
 const service = new CategoryService();
 
 router.get('/', async (req, res, next) => {
@@ -74,4 +78,4 @@ router.delete(
   },
 );
 
-module.exports = router;
+export default router;
