@@ -1,9 +1,14 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
-import routerApi from './routes/index.route.js';
-import { errorHandler, logErrors, boomErrorHandler, validationErrorHandler } from './middlewares/errorHandler.js';
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
+const routerApi = require('./routes/index.route');
+const {
+  errorHandler,
+  logErrors,
+  boomErrorHandler,
+  validationErrorHandler,
+} = require('./middlewares/errorHandler');
 
 dotenv.config();
 const app = express();

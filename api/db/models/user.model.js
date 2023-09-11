@@ -1,8 +1,8 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
-export const USER_TABLE = 'users';
+const USER_TABLE = 'users';
 
-export const UserSchema = {
+const UserSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -31,9 +31,12 @@ export const UserSchema = {
   },
 };
 
-export class User extends Model {
-  static associate() {
-    //associate
+class User extends Model {
+  static associate(models) {
+    this.hasOne(models.Customer, {
+      as: 'customer',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {
@@ -45,3 +48,5 @@ export class User extends Model {
     };
   }
 }
+
+module.exports = { USER_TABLE, UserSchema, User };

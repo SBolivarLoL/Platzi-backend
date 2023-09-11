@@ -1,4 +1,4 @@
-import pool from './../libs/postgresPool.js';
+const pool = require('../libs/postgresPool.js');
 
 class CategoryService {
   constructor() {
@@ -32,4 +32,4 @@ class CategoryService {
   }
 }
 
-export default CategoryService;
+module.exports = CategoryService;

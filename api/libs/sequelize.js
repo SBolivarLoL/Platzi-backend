@@ -1,7 +1,7 @@
-import { Sequelize } from 'sequelize';
+const { Sequelize } = require('sequelize');
 
-import config from './../config/config.js';
-import setupModels from '../db/models/index.model.js';
+const { config } = require('./../config/config');
+const setupModels = require('./../db/models/index.model');
 
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
@@ -14,7 +14,4 @@ const sequelize = new Sequelize(URI, {
 
 setupModels(sequelize);
 
-// Removing sync() since it is not a good function to use for production
-//sequelize.sync();
-
-export default sequelize;
+module.exports = sequelize;

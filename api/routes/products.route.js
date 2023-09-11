@@ -1,14 +1,14 @@
-import { Router } from 'express';
+const express = require('express');
 
-import ProductsService from '../services/product.js';
-import validatorHandler from '../middlewares/validatorHandler.js';
-import {
+const ProductsService = require('./../services/product.service');
+const validatorHandler = require('../middlewares/validatorHandler');
+const {
   createProductSchema,
   updateProductSchema,
   getProductSchema,
-} from '../schemas/product.schema.js';
+} = require('./../schemas/product.schema');
 
-const router = Router();
+const router = express.Router();
 const service = new ProductsService();
 
 router.get('/', async (req, res) => {
@@ -76,4 +76,4 @@ router.delete('/:id', async (req, res) => {
   res.json(product);
 });
 
-export default router;
+module.exports = router;

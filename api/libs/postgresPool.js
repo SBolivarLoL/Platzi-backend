@@ -1,5 +1,5 @@
-import pg from 'pg';
-import config from './../config/config.js';
+const pg = require('pg');
+const config = require('./../config/config');
 
 const { Pool } = pg;
 const USER = encodeURIComponent(config.dbUser);
@@ -8,4 +8,4 @@ const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${
 
 const pool = new Pool({ connectionString: URI });
 
-export default pool;
+module.exports = pool;

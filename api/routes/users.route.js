@@ -1,14 +1,14 @@
-import { Router } from 'express';
+const express = require('express');
 
-import UserService from '../services/user.js';
-import validatorHandler from '../middlewares/validatorHandler.js';
-import {
+const UserService = require('./../services/user.service');
+const validatorHandler = require('../middlewares/validatorHandler.js');
+const {
   updateUserSchema,
   createUserSchema,
   getUserSchema,
-} from '../schemas/user.schema.js';
+} = require('./../schemas/user.schema');
 
-const router = Router();
+const router = express.Router();
 const service = new UserService();
 
 router.get('/', async (req, res, next) => {
@@ -78,4 +78,4 @@ router.delete(
   },
 );
 
-export default router;
+module.exports = router;

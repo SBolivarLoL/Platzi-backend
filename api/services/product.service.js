@@ -1,7 +1,7 @@
-import { faker } from '@faker-js/faker';
-import boom from '@hapi/boom';
+const { faker } = require('@faker-js/faker');
+const boom = require('@hapi/boom');
 
-import sequelize from './../libs/sequelize.js';
+const sequelize = require('../libs/sequelize');
 
 class ProductsService {
   constructor() {
@@ -71,4 +71,4 @@ class ProductsService {
   }
 }
 
-export default ProductsService;
+module.exports = ProductsService;

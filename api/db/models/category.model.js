@@ -1,8 +1,8 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
-export const CATEGORIES_TABLE = 'categories';
+const CATEGORY_TABLE = 'categories';
 
-export const CategorySchema = {
+const CategorySchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -22,7 +22,7 @@ export const CategorySchema = {
   },
 };
 
-export class Category extends Model {
+class Category extends Model {
   static associate() {
     //associate
   }
@@ -30,9 +30,11 @@ export class Category extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: CATEGORIES_TABLE,
+      tableName: CATEGORY_TABLE,
       modelName: 'Category',
       timestamps: false,
     };
   }
 }
+
+module.exports = { Category, CategorySchema, CATEGORY_TABLE };

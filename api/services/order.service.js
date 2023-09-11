@@ -1,4 +1,4 @@
-const pool = require('./../libs/postgresPool');
+const pool = require('../libs/postgresPool');
 
 class OrderService {
   constructor() {

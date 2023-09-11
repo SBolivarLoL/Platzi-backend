@@ -1,18 +1,20 @@
-import { Router } from 'express';
+const express = require('express');
 
-import productsRouter from './products.route.js';
-import usersRouter from './users.route.js';
-import categoriesRouter from './categories.route.js';
-import orderRouter from './orders.route.js';
+const productsRouter = require('./products.route');
+const categoriesRouter = require('./categories.route');
+const usersRouter = require('./users.route');
+const orderRouter = require('./orders.route');
+const customersRouter = require('./customers.route');
 
 function routerApi(app) {
-  const router = Router();
+  const router = express.Router();
   app.use('/api/v1', router);
 
   router.use('/products', productsRouter);
   router.use('/users', usersRouter);
   router.use('/categories', categoriesRouter);
   router.use('/orders', orderRouter);
+  router.use('/customers', customersRouter);
 }
 
-export default routerApi;
+module.exports = routerApi;
