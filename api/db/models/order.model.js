@@ -1,17 +1,25 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+const { Model, DataTypes, Sequelize } = require('sequelize');
+const {CUSTOMER_TABLE} = require('./customer.model')
 
-export const ORDER_TABLE = 'orders';
+const ORDER_TABLE = 'orders';
 
-export const OrderSchema = {
+const OrderSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  details: {
+  customerId: {
+    field: 'customer_id',
     allowNull: false,
-    type: DataTypes.TEXT,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CUSTOMER_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
   },
   createdAt: {
     allowNull: false,
@@ -21,9 +29,11 @@ export const OrderSchema = {
   },
 };
 
-export class Order extends Model {
-  static associate() {
-    //associate
+class Order extends Model {
+  static associate(models) {
+    this.belongsTo(models.Customer, {
+      as: 'customer'
+    })
   };
 
   static config(sequelize) {
@@ -35,3 +45,5 @@ export class Order extends Model {
     };
   };
 };
+
+module.exports = {Order, OrderSchema, ORDER_TABLE};

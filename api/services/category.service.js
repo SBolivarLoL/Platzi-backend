@@ -1,11 +1,7 @@
-const pool = require('../libs/postgresPool.js');
-
 const { models } = require('./../libs/sequelize')
 
 class CategoryService {
   constructor() {
-    this.pool = pool;
-    this.pool.on('error', (err) => console.error(err));
   }
 
   async create(data) {
@@ -14,13 +10,15 @@ class CategoryService {
   }
 
   async find() {
-    const query = 'SELECT * FROM tasks';
-    const response = await this.pool.query(query);
-    return response.rows;
+    const categories = await models.Category.findAll();
+    return categories;
   }
 
   async findOne(id) {
-    return { id };
+    const category = await models.Category.findByPk(id, {
+      include: ['products']
+    });
+    return category;
   }
 
   async update(id, changes) {
