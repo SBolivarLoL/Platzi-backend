@@ -5,12 +5,16 @@ class CustomerService {
   constructor() {}
 
   async create(data) {
-    const newCustomer = await sequelize.models.Customer.create(data);
+    const newCustomer = await sequelize.models.Customer.create(data, {
+      include: ['user']
+    });
     return newCustomer;
   }
 
   async find() {
-    const response = await sequelize.models.Customer.findAll();
+    const response = await sequelize.models.Customer.findAll({
+      include: ['user']
+    });
     return response;
   }
 
