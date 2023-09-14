@@ -35,9 +35,10 @@ app.get('/api', (req, res) => {
 
 routerApi(app);
 app.use(logErrors);
+app.use(validationErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
-app.use(validationErrorHandler);
+
 
 app.listen(port, () => {
   console.log('Mi puerto' + port);

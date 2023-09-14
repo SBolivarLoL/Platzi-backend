@@ -47,10 +47,15 @@ Meaning that /products/filter should be coded before /products/:id
 router.post(
   '/',
   validatorHandler(createProductSchema, 'body'),
-  async (req, res) => {
-    const body = req.body;
-    const newPrduct = await service.create(body);
-    res.status(201).json(newPrduct);
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newPrduct = await service.create(body);
+      res.status(201).json(newPrduct);
+    } catch (error) {
+      next(error);
+    }
+
   },
 );
 

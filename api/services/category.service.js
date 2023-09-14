@@ -1,5 +1,7 @@
 const pool = require('../libs/postgresPool.js');
 
+const { models } = require('./../libs/sequelize')
+
 class CategoryService {
   constructor() {
     this.pool = pool;
@@ -7,7 +9,8 @@ class CategoryService {
   }
 
   async create(data) {
-    return data;
+    const newCategory = await models.Category.create(data)
+    return newCategory;
   }
 
   async find() {
