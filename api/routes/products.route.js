@@ -25,10 +25,6 @@ router.get(
   },
 );
 
-router.get('/filter', (req, res) => {
-  res.send('Yo soy filter');
-});
-
 router.get(
   '/:id',
   validatorHandler(getProductSchema, 'params'),
@@ -83,10 +79,18 @@ router.patch(
   },
 );
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const product = await service.delete(id);
-  res.json(product);
-});
+router.delete(
+  '/:id',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.delete(id);
+      res.status(200).json({ id });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 module.exports = router;

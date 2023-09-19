@@ -1,11 +1,10 @@
-const { models } = require('./../libs/sequelize')
+const { models } = require('./../libs/sequelize');
 
 class CategoryService {
-  constructor() {
-  }
+  constructor() {}
 
   async create(data) {
-    const newCategory = await models.Category.create(data)
+    const newCategory = await models.Category.create(data);
     return newCategory;
   }
 
@@ -16,19 +15,20 @@ class CategoryService {
 
   async findOne(id) {
     const category = await models.Category.findByPk(id, {
-      include: ['products']
+      include: ['products'],
     });
     return category;
   }
 
   async update(id, changes) {
-    return {
-      id,
-      changes,
-    };
+    const category = await this.findOne(id);
+    const response = category.update(changes);
+    return response;
   }
 
   async delete(id) {
+    const category = await this.findOne(id);
+    await category.destroy();
     return { id };
   }
 }

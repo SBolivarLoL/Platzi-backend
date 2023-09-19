@@ -6,6 +6,7 @@ const {
   createOrderSchema,
   addItemSchema,
 } = require('./../schemas/order.schema');
+const { updateProductSchema } = require('../schemas/product.schema');
 
 const router = express.Router();
 const service = new OrderService();
@@ -62,4 +63,33 @@ router.post(
   },
 );
 
+router.patch(
+  '/:id',
+  validatorHandler(getOrderSchema, 'params'),
+  validatorHandler(updateProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      const order = await service.update(id, body);
+      res.json(order);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.delete(
+  '/:id',
+  validatorHandler(getOrderSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.delete(id);
+      res.status(200).json({ id });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 module.exports = router;
