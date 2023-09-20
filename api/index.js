@@ -9,6 +9,7 @@ const {
   boomErrorHandler,
   validationErrorHandler,
 } = require('./middlewares/errorHandler');
+const passport = require('passport');
 
 dotenv.config();
 const app = express();
@@ -26,6 +27,7 @@ const options = {
 };
 
 app.use(cors(options));
+require('./utils/auth/index')
 app.use(morgan('dev'));
 app.use(express.json());
 
@@ -33,12 +35,12 @@ app.get('/api', (req, res) => {
   res.send('Hola a mi server en express');
 });
 
+app.use(passport.initialize());
 routerApi(app);
 app.use(logErrors);
 app.use(validationErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
-
 
 app.listen(port, () => {
   console.log('Mi puerto' + port);

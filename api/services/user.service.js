@@ -1,5 +1,5 @@
 const boom = require('@hapi/boom');
-const sequelize = require('../libs/sequelize.js');
+const {models} = require('../libs/sequelize');
 const {hashPassword} = require('./../libs/hash');
 
 class UserService {
@@ -7,7 +7,7 @@ class UserService {
 
   async create(data) {
     const hashedPassword = await hashPassword(data.password);
-    const newUser = await sequelize.models.User.create({
+    const newUser = await models.User.create({
       ...data,
       password: hashedPassword,
     });
@@ -16,14 +16,21 @@ class UserService {
   }
 
   async find() {
-    const response = await sequelize.models.User.findAll({
-      include: ['customer']
+    const response = await models.User.findAll({
+      include: ['customer'],
+    });
+    return response;
+  }
+
+  async findByEmail(email) {
+    const response = await models.User.findOne({
+      where: {email}
     });
     return response;
   }
 
   async findOne(id) {
-    const user = await sequelize.models.User.findByPk(id);
+    const user = await models.User.findByPk(id);
     if (!user) {
       throw boom.notFound('User not found');
     }
